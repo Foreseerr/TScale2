@@ -23,17 +23,18 @@ Model dim string e1536h12d16ffn18xp384moes6moe192, 500m active. Fits on single G
 ## MFU depending on PP
 Model e2048xp512h16d36ffn24moe96moes6, 6 of 96 experts. It fits on 2 GPU, but we spread it on 4 and 8 GPUs as well
 |1.6B of 10B|PP=2|PP=4|PP=8|
-|--|--|--|--|--|--|
+|--|--|--|--|
 |MFU|14.33|12.94|10.23|
 
 ## Longer runs
 1.5B dense model
-|1.5B (dense)|Hellaswag|LogLoss||
-|--|--|--|--|--|--|
+|1.5B (dense)|Hellaswag|LogLoss|
+|--|--|--|
 |30B train|49.47|2.46|
 |120B train|57.07|2.33|
+
 MoE model
-|1.5B of 10.4B (MoE)|Hellaswag|LogLoss||
-|--|--|--|--|--|--|
+|1.5B of 10.4B (MoE)|Hellaswag|LogLoss|
+|--|--|--|
 |30B train|54.82|2.34|
 |120B train|62.58|2.12|
