@@ -1,7 +1,7 @@
 ﻿
 # TScale2
 
-Update of transformer train TScale written in C++ and CUDA.
+Update of transformer train [TScale](https://github.com/Foreseerr/TScale/) written in C++ and CUDA.
 
 TScale2 differs from TScale in few aspects
 - MoE support
@@ -10,6 +10,7 @@ TScale2 differs from TScale in few aspects
 - Async distributed training deprecated
 
 [How TScale MoE is different](doc/moe.md)
+
 [Some train runs results](doc/runs.md)
 
 Scripts are mostly the same, more documentation in TScale repo.
