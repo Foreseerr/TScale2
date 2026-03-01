@@ -12,7 +12,9 @@ Model dim string e1792h14d42ffn20xp512moes6moe192
 |MFU (1 host)|20.5|16.5|15.7|12.15|8.8|
 |Hellaswag|49.47|52.86|53.28|54.82|55.39|
 |Logloss|2.465|2.407|2.382|2.345|2.317|
+
 Performance is far from optimized in this code. Performance is mostly affected by high PP. PP can be radically reduced by sharding master weights across instances (not implemented). 
+
 ## MFU depending on sparsity
 Model dim string e1536h12d16ffn18xp384moes6moe192, 500m active. Fits on single GPU.
 | | 500M (dense)|1B|1.5B|2.7B|5.1B|
