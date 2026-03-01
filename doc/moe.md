@@ -1,0 +1,8 @@
+# MoE
+TScale MoE implementation is different in few aspects.
+* First few model layers are dense, using MoE for them is not beneficial. 
+* TScale does not use any load balancing, introducing it reduces model quality. Inference load balance can be achieved by replicating more frequently used experts.
+* TScale does not use parameter or gradient scaling. All model parameters have same dynamic range and normal distribution due to using per matrix gradient dispersion estimate in optimizer instead of per parameter estimate as in Adam. Optimal format for parameters would be non-existing e2m5. For gradients e4m3 is sufficient. Parameters can be converted to fp4 without any tricks, can do it during training to get QAT.
+* Expert weights norm is L2, not L1. So sum of weight squares equal to 1, not sum of weights. I'd expect different outputs from different experts, that's the point of having experts in the first place. Different vectors in high dimension are mostly orthogonal. To get norm preserving weighting one needs to have sum of weight squares equal to one, not sum of weights. Using L2 norm for expert weights allows using same learning rate across wider MoE configs (active and total number of experts). To get sparsity invariant learning rate TScale also multiplies MoE matrices updates with sqrt(sparsity). 
+* To preserve precision expert select matrix gradient is always computed with fp16 precision.
+* MoE (and dense ffn) is using tanh non-linearity. It is called LoLU for lulz and historical reasons. tanh() is linear near 0 achieving faster learning at the start and is saturated to preserve training stability in late stages.

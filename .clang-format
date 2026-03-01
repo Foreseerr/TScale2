@@ -1,0 +1,16 @@
+BasedOnStyle: Microsoft
+BreakBeforeBraces: Custom
+BraceWrapping:
+  BeforeElse: false
+  BeforeWhile: false
+  AfterControlStatement: false
+  AfterEnum: false
+AllowShortFunctionsOnASingleLine: Inline
+MaxEmptyLinesToKeep: 2
+FixNamespaceComments: false
+AccessModifierOffset: -4
+AlignAfterOpenBracket: DontAlign
+BreakTemplateDeclarations: Yes
+AlignTrailingComments: Leave
+LineCommentContentIndent: 0
+ColumnLimit: 140

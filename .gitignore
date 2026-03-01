@@ -1,0 +1,5 @@
+.vscode 
+build
+fo
+!fo/fo.cpp
+CMakeLists.txt
