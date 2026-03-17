@@ -1,5 +1,5 @@
 .vscode 
 build
-fo
+fo/*
 !fo/fo.cpp
 CMakeLists.txt

@@ -312,7 +312,7 @@ static void WriteValue(TPtrArg<TJson> json, const TJsonStringPtr &stringPos, TJs
 {
     const char *str = json->GetString(stringPos);
     while (*str) {
-        dst->Write(*str);
+        dst->Write(*str++);
     }
 }
 
