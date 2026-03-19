@@ -45,7 +45,7 @@ struct TNetTrainContext
     TIntrusivePtr<TP2PNetwork> P2PNet;
     TIntrusivePtr<IModel> Model;
     TIntrusivePtr<TMMNetDeltaReduceGen> NetDeltaReduce;
-    TVector<ui8> ModelSnapshot;
+    TVector<char> ModelSnapshot;
     TThread P2PThread;
 };
 

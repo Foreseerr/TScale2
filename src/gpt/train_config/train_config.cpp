@@ -93,6 +93,8 @@ static TIntrusivePtr<TModelParamsHolder> CreateModel(const TConfigFile::TOp &op,
             modelFlags |= MPF_HASHED_EMBED;
         } else if (flag == "MPF_TAIL_LOSS") {
             modelFlags |= MPF_TAIL_LOSS;
+        } else if (flag == "MPF_SIM_QUANT_1BIT") {
+            modelFlags |= MPF_SIM_QUANT_1BIT;
         } else if (flag == "MPF_SIM_QUANT_2BIT") {
             modelFlags |= MPF_SIM_QUANT_2BIT;
         } else if (flag == "MPF_SIM_QUANT_4BIT") {
@@ -122,7 +124,7 @@ static TIntrusivePtr<TModelParamsHolder> CreateModel(const TConfigFile::TOp &op,
     TModelDescr modelDescr;
     InitModelDescr(&modelDescr, modelDescrString, stats.VocabSize, stats.VocabSize, modelFlags);
     InitModel(&res->Params, rng, modelDescr, COMBINER_INIT_ZERO, stats.Bias);
-    if (stats.DocStartToken>= 0) {
+    if (stats.DocStartToken >= 0) {
         res->Params.ModelDescr.SetDocStartToken(stats.DocStartToken);
     } else {
         Y_ASSERT(!res->Params.ModelDescr.HasFlag(MPF_USE_DOC_START_TOKEN));

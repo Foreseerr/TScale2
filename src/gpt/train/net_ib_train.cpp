@@ -38,7 +38,7 @@ struct TNetTrainContext
     TMasterConnection Master;
     TIntrusivePtr<INetReducer> NetReducer;
     TIntrusivePtr<IModel> Model;
-    TVector<ui8> ModelSnapshot;
+    TVector<char> ModelSnapshot;
 };
 
 
@@ -79,7 +79,7 @@ public:
     void Exec(TNetTrainContext *p) override
     {
         constexpr yint CHAIN_COUNT = 2;
-        TVector<ui8> hs;
+        TVector<char> hs;
 #ifdef PLATFORM_HAS_IBVERBS
         p->NetReducer = CreateInfinibandReducer(p->Net, CHAIN_COUNT);
 #else
@@ -97,18 +97,17 @@ class TEstablishConnections : public TCommandPacket
 {
     yint Rank = 0;
     TVector<TString> PeerList;
-    TVector<TVector<ui8>> HandshakeArr;
+    TVector<TVector<char>> HandshakeArr;
     SAVELOAD_OVERRIDE(Rank, PeerList, HandshakeArr);
 
 public:
     TEstablishConnections() {}
-    TEstablishConnections(yint rank, const TVector<TString> &peerList, const TVector<TVector<ui8>> &handshakeArr)
+    TEstablishConnections(yint rank, const TVector<TString> &peerList, const TVector<TVector<char>> &handshakeArr)
         : Rank(rank), PeerList(peerList), HandshakeArr(handshakeArr)
     {
     }
     void Exec(TNetTrainContext *p) override
     {
-        TVector<ui8> hs;
         p->NetReducer->EstablishConnections(Rank, PeerList, HandshakeArr);
         p->Master.SendCopy(CMD_OK);
         p->Rank = Rank;
@@ -154,7 +153,7 @@ void RunMaster(yint startIteration, yint deviceCount, const TModelSplit &msplit,
     masterNet.ConnectWorkers(workerAddrArr, NetTrainToken);
 
     DebugPrintf("rdma connect\n");
-    TVector<TVector<ui8>> handshakeArr;
+    TVector<TVector<char>> handshakeArr;
     masterNet.BroadcastCommand(new THandshake(), &handshakeArr);
     for (yint rank = 0, total = masterNet.GetWorkerCount(); rank < total; ++rank) {
         masterNet.SendCommand(masterNet.Workers[rank], new TEstablishConnections(rank, workerAddrArr, handshakeArr));

@@ -17,22 +17,22 @@ enum {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // select matmul
 
-// // int8 matmul (requires i8 model matrices)
-// constexpr int FWD_MATMUL_TYPE = MATMUL_INT8;
-// constexpr int BWD_MATMUL_TYPE = MATMUL_INT8;
-// //constexpr int BWD_MATMUL_TYPE = MATMUL_FP16;
-// typedef half TFastGradientFloat;
-// typedef i8 TNormStateFloat;
-// typedef i8 TFastModelFloat;
-
-// fp8 matmul (requires e4m3 model matrices)
-constexpr int FWD_MATMUL_TYPE = MATMUL_FP8;
-constexpr int BWD_MATMUL_TYPE = MATMUL_FP8;
+// int8 matmul (requires i8 model matrices)
+constexpr int FWD_MATMUL_TYPE = MATMUL_INT8;
+constexpr int BWD_MATMUL_TYPE = MATMUL_INT8;
 //constexpr int BWD_MATMUL_TYPE = MATMUL_FP16;
-//typedef e5m2 TFastGradientFloat;
-typedef e4m3 TFastGradientFloat; // sufficient in most cases
-typedef e4m3 TNormStateFloat;
-typedef e4m3 TFastModelFloat;
+typedef half TFastGradientFloat;
+typedef i8 TNormStateFloat;
+typedef i8 TFastModelFloat;
+
+// // fp8 matmul (requires e4m3 model matrices)
+// constexpr int FWD_MATMUL_TYPE = MATMUL_FP8;
+// constexpr int BWD_MATMUL_TYPE = MATMUL_FP8;
+// //constexpr int BWD_MATMUL_TYPE = MATMUL_FP16;
+// //typedef e5m2 TFastGradientFloat;
+// typedef e4m3 TFastGradientFloat; // sufficient in most cases
+// typedef e4m3 TNormStateFloat;
+// typedef e4m3 TFastModelFloat;
 
 // // fp16 matmul
 // constexpr int FWD_MATMUL_TYPE = MATMUL_FP16;

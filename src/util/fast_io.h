@@ -174,7 +174,7 @@ public:
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 class TMemStream : public IBinaryStream
 {
-    TVector<ui8> Data;
+    TVector<char> Data;
     yint Pos = 0;
 
 private:
@@ -212,7 +212,7 @@ public:
     TMemStream() : Pos(0)
     {
     }
-    TMemStream(TVector<ui8> *data) : Pos(0)
+    TMemStream(TVector<char> *data) : Pos(0)
     {
         Data.swap(*data);
     }
@@ -236,7 +236,7 @@ public:
     {
         Data.resize(Pos);
     }
-    void Swap(TVector<ui8> *data)
+    void Swap(TVector<char> *data)
     {
         data->swap(Data);
         Pos = 0;
@@ -255,7 +255,7 @@ public:
 class TBufferedStream : public TNonCopyable
 {
     enum { PREFETCH_SIZE = 1 << 20 };
-    TVector<ui8> Buf;
+    TVector<char> Buf;
     IBinaryStream *Stream = 0;
     TMemStream *MemStream = 0;
     yint Pos = 0;

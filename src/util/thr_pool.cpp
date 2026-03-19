@@ -2,11 +2,11 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-void TParallelExec::RunJob(TPtrArg<IJob> job)
+void TParallelExec::RunCurrentJob()
 {
     for (;;) {
         yint k = JobK.fetch_add(1);
-        if (k >= job->Count) {
+        if (k >= Job->Count) {
             return;
         }
         Job->Run(k);
@@ -20,7 +20,7 @@ void TParallelExec::WorkerThread()
     while (!Exit) {
         yint curJobId = JobId;
         if (curJobId != prevJobId) {
-            RunJob(Job);
+            RunCurrentJob();
             CompleteCount.fetch_add(1);
             prevJobId = curJobId;
         } else {
@@ -30,7 +30,7 @@ void TParallelExec::WorkerThread()
 }
 
 
-TParallelExec::TParallelExec(yint threadCount)
+TParallelExec::TParallelExec(yint threadCount) : JobId(0), JobK(0), CompleteCount(0)
 {
     for (yint thrId = 0; thrId < threadCount; ++thrId) {
         ThrArr.push_back(new TThreadHolder(this));

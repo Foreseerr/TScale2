@@ -9,6 +9,8 @@ TScale2 differs from TScale in few aspects
 - RDMA (infiniband) support
 - Async distributed training deprecated
 
+[Playing golf](/golf/golf.md)
+
 [How TScale MoE is different](doc/moe.md)
 
 [Some train runs results](doc/runs.md)

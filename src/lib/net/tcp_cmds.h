@@ -49,7 +49,7 @@ TIntrusivePtr<TTcpPacket> SerializeCommand(TCommandFabric<TCmd> &fabric, TArg *c
 }
 
 template <class TCmd>
-TIntrusivePtr<TCmd> DeserializeCommand(TCommandFabric<TCmd> &fabric, TVector<ui8> *p)
+TIntrusivePtr<TCmd> DeserializeCommand(TCommandFabric<TCmd> &fabric, TVector<char> *p)
 {
     TIntrusivePtr<TCommandBase> cmd;
     {

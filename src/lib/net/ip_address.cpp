@@ -223,24 +223,30 @@ bool ParseInetName(sockaddr_in6 *pRes, const char *name, int nDefaultPort)
 }
 
 
-void ReplacePort(TString *pAddr, int newPort)
+void StripPort(TString *pAddr)
 {
-    // strip port
-    if (!pAddr->empty()) {
-        if ((*pAddr)[0] == '[') {
+    TString &addr = *pAddr;
+    if (!addr.empty()) {
+        if (addr[0] == '[') {
             // we expect ip v6 address in the form [0::0]:port
-            size_t nIdx = pAddr->find(']');
+            size_t nIdx = addr.find(']');
             if (nIdx != TString::npos) {
-                pAddr->resize(nIdx + 1);
+                addr.resize(nIdx + 1);
             }
         } else {
             // regular address
-            size_t nIdx = pAddr->find(':');
+            size_t nIdx = addr.find(':');
             if (nIdx != TString::npos) {
-                pAddr->resize(nIdx);
+                addr.resize(nIdx);
             }
         }
     }
+}
+
+
+void ReplacePort(TString *pAddr, int newPort)
+{
+    StripPort(pAddr);
     *pAddr += Sprintf(":%d", newPort);
 }
 

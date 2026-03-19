@@ -367,6 +367,34 @@ void AddPackedMatrices(TModelParams *p, TBufferedStream &f, float scale)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+void PackModelParams(TModelParams &params, TVector<char> *pBuf)
+{
+    TMemStream mem;
+    {
+        TBufferedStream bufIO(IO_WRITE, mem);
+        WriteStruct(bufIO, params.ModelDescr);
+        WriteStruct(bufIO, params.Bias);
+        PackMatrices(bufIO, params);
+    }
+    mem.Swap(pBuf);
+}
+
+void UnpackModelParams(TVector<char> &buf, TModelParams *p)
+{
+    TMemStream mem(&buf);
+    {
+        TBufferedStream bufIO(IO_READ, mem);
+        TModelDescr modelDescr;
+        ReadStruct(bufIO, modelDescr);
+        AllocateModel(p, modelDescr);
+        ReadStruct(bufIO, p->Bias);
+        AddPackedMatrices(p, bufIO, 1);
+    }
+    mem.Swap(&buf);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 void GetRowDisp(TModelRowDisp *p, const TModelParams &params)
 {
     p->Clear();

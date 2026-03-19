@@ -109,6 +109,7 @@ public:
         Grad1.Assign(grad1);
         SumWeight = sumWeight;
         RowDisp = rowDisp;
+        Sparsity = sparsity;
     }
 
     // resize

@@ -38,7 +38,6 @@ void ConvertToFastMatrixFloat(i8 *dst, const float *src, __m256 mult, int xSize,
     if (quant == MM_QUANT_158BIT) {
         // 1.58 bit
         for (yint x = 0; x < xSize; ++x) {
-            // dst[x] = (src[x] > 0) ? 32 : -32;
             if (dst[x] < -15) {
                 dst[x] = -32;
             } else if (dst[x] > 15) {
@@ -46,6 +45,10 @@ void ConvertToFastMatrixFloat(i8 *dst, const float *src, __m256 mult, int xSize,
             } else {
                 dst[x] = 0;
             }
+        }
+    } else if (quant == MM_QUANT_1BIT) {
+        for (yint x = 0; x < xSize; ++x) {
+            dst[x] = (src[x] > 0) ? 32 : -32;
         }
     } else if (quant == MM_QUANT_2BIT) {
         for (yint x = 0; x < xSize; ++x) {

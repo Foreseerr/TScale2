@@ -66,8 +66,8 @@ struct IRdmaTransport : public TThrRefBase
     TVector<TChain> ChainArr;
 
     IRdmaTransport(yint chainCount) { ChainArr.resize(chainCount); }
-    virtual void PrepareConnections(TVector<ui8> *p) = 0;
-    virtual void EstablishConnections(yint myRank, const TVector<TString> &peerList, TVector<TVector<ui8>> &handshakeArr) = 0;
+    virtual void PrepareConnections(TVector<char> *p) = 0;
+    virtual void EstablishConnections(yint myRank, const TVector<TString> &peerList, TVector<TVector<char>> &handshakeArr) = 0;
     virtual void InitDevice(yint deviceId) = 0;
     virtual void OnInitComplete(
         const TVector<TVector<NCuda::TMemoryBlob>> &allBufArr, TVector<TIntrusivePtr<NCuda::TCudaMemoryPool>> &poolArr) = 0;

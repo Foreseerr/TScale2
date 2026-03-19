@@ -193,14 +193,14 @@ public:
         P2P = new TP2PNetwork(Net, InfinibandRdmaToken);
     }
 
-    void PrepareConnections(TVector<ui8> *p) override
+    void PrepareConnections(TVector<char> *p) override
     {
         THandshake hs;
         hs.Port = P2P->GetPort();
         SerializeMem(IO_WRITE, p, hs);
     }
 
-    void EstablishConnections(yint myRank, const TVector<TString> &peerList, TVector<TVector<ui8>> &handshakeArr) override
+    void EstablishConnections(yint myRank, const TVector<TString> &peerList, TVector<TVector<char>> &handshakeArr) override
     {
         TVector<TString> peerAddr = peerList;
         for (yint k = 0; k < YSize(peerList); ++k) {

@@ -9,7 +9,7 @@ namespace NNet
 {
 struct TTcpPacket : public TThrRefBase
 {
-    TVector<ui8> Data;
+    TVector<char> Data;
 };
 
 template <class T>
@@ -36,7 +36,7 @@ TIntrusivePtr<ITcpConnection> Connect(const TString &hostName, yint defaultPort,
 struct TTcpPacketReceived : public TThrRefBase
 {
     TIntrusivePtr<ITcpConnection> Conn;
-    TVector<ui8> Data;
+    TVector<char> Data;
 };
 
 

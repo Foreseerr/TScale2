@@ -27,9 +27,8 @@ void WriteLog(TLogId logId, yint lineLen, const char *pszFormat, va_list va)
         OutputDebugStringA(str.c_str());
         OutputDebugStringA("\n");
     }
-#else
-    printf("%s\n", str.c_str());
 #endif
+    printf("%s\n", str.c_str());
     //
     {
         TGuard<TAtomic> g(LogLock);

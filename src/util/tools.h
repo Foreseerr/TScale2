@@ -64,6 +64,12 @@ inline yint RoundDown(yint k, yint block)
 template <class T, class TElem>
 inline bool IsInSet(const T &c, const TElem &e) { return find(c.begin(), c.end(), e) != c.end(); }
 
+template <class T, class TElem>
+inline bool IsInSet(const THashMap<TElem, T> &c, const TElem &e)
+{
+    return c.find(e) != c.end();
+}
+
 template <class T>
 yint YSize(const T &x)
 {

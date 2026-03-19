@@ -125,5 +125,10 @@ void AddPackedMatrices(TModelParams *p, TBufferedStream &f, float scale);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+void PackModelParams(TModelParams &params, TVector<char> *pBuf);
+void UnpackModelParams(TVector<char> &buf, TModelParams *p);
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 void GetRowDisp(TModelRowDisp *p, const TModelParams &params);
 void SetRowDisp(TModelParams *p, const TModelRowDisp &rd);

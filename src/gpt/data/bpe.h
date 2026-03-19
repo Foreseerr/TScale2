@@ -325,7 +325,7 @@ public:
 
             } else if (TokenizerType == TK_WORD) {
                 auto itWord = Word2Id.find(word);
-                if (itWord != Word2Id.end()) {
+                if (itWord != Word2Id.end() && itWord->second >= 0) {
                     res->push_back(itWord->second);
                 } else {
                     GenLetterTokens(word, res);

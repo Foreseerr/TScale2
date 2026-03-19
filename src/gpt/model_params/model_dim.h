@@ -50,6 +50,7 @@ const ui64 MPF_DISABLE_TUNE_FINAL_LAYER = 0x4000;
 const ui64 MPF_DISABLE_TUNE_LAYERS = 0x8000;
 const ui64 MPF_RNN = 0x10000;
 const ui64 MPF_RNN_CROSS = 0x20000;
+const ui64 MPF_SIM_QUANT_1BIT = 0x40000;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -274,6 +275,7 @@ inline bool operator==(const TModelDescr &a, const TModelDescr &b)
 // quant
 enum EModelMatrixQuant {
     MM_QUANT_NONE,
+    MM_QUANT_1BIT,
     MM_QUANT_158BIT, // -1 / 0 / 1
     MM_QUANT_2BIT,
     MM_QUANT_4BIT,
@@ -287,6 +289,8 @@ inline EModelMatrixQuant GetQuant(const TModelDescr &modelDescr)
         quant = MM_QUANT_2BIT;
     } else if (modelDescr.HasFlag(MPF_SIM_QUANT_4BIT)) {
         quant = MM_QUANT_4BIT;
+    } else if (modelDescr.HasFlag(MPF_SIM_QUANT_1BIT)) {
+        quant = MM_QUANT_1BIT;
     }
     return quant;
 }

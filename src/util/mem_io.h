@@ -3,7 +3,7 @@
 
 
 template<class T>
-inline void SerializeMem(EIODirection ioDir, TVector<ui8> *data, T &c)
+inline void SerializeMem(EIODirection ioDir, TVector<char> *data, T &c)
 {
     if (IBinSaver::HasTrivialSerializer(&c)) {
         if (ioDir == IO_READ) {

@@ -240,9 +240,9 @@ private:
         Worker.Join();
     }
 
-    void PrepareConnections(TVector<ui8> *p) override { Transport->PrepareConnections(p); }
+    void PrepareConnections(TVector<char> *p) override { Transport->PrepareConnections(p); }
 
-    void EstablishConnections(yint myRank, const TVector<TString> &peerList, TVector<TVector<ui8>> &handshakeArr) override
+    void EstablishConnections(yint myRank, const TVector<TString> &peerList, TVector<TVector<char>> &handshakeArr) override
     {
         MyRank = myRank;
         RankCount = YSize(peerList);

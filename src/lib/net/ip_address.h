@@ -36,6 +36,7 @@ inline bool operator==(const TIPAddress &a, const TIPAddress &b)
 
 timeval MakeTimeval(float timeoutSec);
 bool ParseInetName(sockaddr_in6 *pRes, const char *name, int nDefaultPort);
+void StripPort(TString *pszPureHost);
 void ReplacePort(TString *pszPureHost, int newPort);
 TString GetHostName();
 }

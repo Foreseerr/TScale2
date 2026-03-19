@@ -178,7 +178,7 @@ private:
                     DoSend();
                 }
             } else {
-                const TVector<ui8> &data = SendArr[0]->Data;
+                const TVector<char> &data = SendArr[0]->Data;
                 yint sz = YSize(data) - SendOffset;
                 int rv = 0;
                 if (sz > 0) {

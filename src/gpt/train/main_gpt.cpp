@@ -22,17 +22,12 @@
 // Data script
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // load text or connect
-static TString DATA_SCRIPT =
-    " make_char_dataset('enwik8')"
-    ;
+static TString DATA_SCRIPT = " make_char_dataset('enwik8')";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Train script
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static TString TRAIN_SCRIPT =
-    " check_cpu_gpu_match()\n"
-    //" check_infer_match()\n"
-    ;
+static TString TRAIN_SCRIPT = " check_cpu_gpu_match()";
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -290,10 +285,10 @@ void CheckCpuGpuMatch(const TDescentConfig &dc, TPtrArg<IDataSource> data)
 
     yint tmInstanceCount = 1;
     //yint tmInstanceCount = 2;
-    TModelSplit msplit = SplitModel(modelDescr.GetDepth(), 1, 1, 1);
+    //TModelSplit msplit = SplitModel(modelDescr.GetDepth(), 1, 1, 1);
     //TModelSplit msplit = SplitModel(modelDescr.GetDepth(), 3, 1, 1); // TP
     //TModelSplit msplit = SplitModel(modelDescr.GetDepth(), 1, 3, 1); // PP
-    //TModelSplit msplit = SplitModel(modelDescr.GetDepth(), 3, 2, 1); // TP * PP
+    TModelSplit msplit = SplitModel(modelDescr.GetDepth(), 3, 2, 1); // TP * PP
     yint deviceCount = msplit.GetLocationCount() * msplit.TP * tmInstanceCount;
     Y_VERIFY(deviceCount < MAX_NUM_DEVICES);
     //TIntrusivePtr<IModel> gpuModel = CreateHostMatrixTransformer(params, deviceCount, NODE_COUNT);
@@ -661,8 +656,6 @@ int main(int argc, char **argv)
     //Repack();
     //GenerateArithmetic();
     //GenerateArithmetic97();
-    //NCPUInfer::Check();
-    //NFedSim::Run();
     //TestLMatch();
     // RunMultideviceTest();
     // return 0;

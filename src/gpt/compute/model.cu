@@ -240,8 +240,14 @@ TIntrusivePtr<IModel> CreateHostMatrixTransformer(const TModelParams &modelParam
 TIntrusivePtr<IModel> CreateCustomLossTransformer(
     const TModelParams &modelParams, yint deviceCount, yint nodeCount, TPtrArg<ICustomLoss> customLoss)
 {
-    //TIntrusivePtr<IModelOps> modelOps = new TCpuModelOps(deviceCount, GetMaxMatrixCount(modelParams), nullptr);
-    TIntrusivePtr<IModelOps> modelOps = new TCudaModelOps(deviceCount, 1, 1, 0, null_ptr_arg);
+    TIntrusivePtr<IModelOps> modelOps;
+    if (CudaCanEnablePeerAccess()) {
+        // use CUDA gradient accumulation
+        modelOps = new TCudaModelOps(deviceCount, 1, 1, 0, null_ptr_arg);
+    } else {
+        // fallback to CPU gradient aggregation for non peer access enabled configurations
+        modelOps = new TCpuModelOps(deviceCount, GetMaxMatrixCount(modelParams), nullptr);
+    }
     TIntrusivePtr<TModel> model = new TModel(modelParams, modelOps);
     model->SetImpl(CreateWithCustomLoss(model->GetModelStorage(), modelOps, nodeCount, customLoss));
     return model;

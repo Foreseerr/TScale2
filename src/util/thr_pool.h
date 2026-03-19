@@ -22,14 +22,14 @@ class TParallelExec : public TNonCopyable
         void Run(yint k) override { F(k); }
     };
 
-    TIntrusivePtr<IJob> Job;
+    IJob *volatile Job = 0;
     std::atomic<yint> JobId;
     std::atomic<yint> JobK;
     std::atomic<yint> CompleteCount;
     TVector<TIntrusivePtr<TThreadHolder>> ThrArr;
     volatile bool Exit = false;
 
-    void RunJob(TPtrArg<IJob> job);
+    void RunCurrentJob();
 
 public:
     TParallelExec(yint threadCount);
@@ -37,16 +37,23 @@ public:
     void WorkerThread();
 
     template <class F>
-    void Run(yint count, F f)
+    void Run(yint start, yint count, F f)
     {
-        Job = new TJob<F>(count, f);
+        TIntrusivePtr<IJob> job = new TJob<F>(count, f);
+        Job = job.Get();
         CompleteCount = 0;
-        JobK = 0;
+        JobK = start;
         JobId.fetch_add(1);
-        RunJob(Job);
+        RunCurrentJob();
         while (CompleteCount < YSize(ThrArr)) {
             SchedYield();
         }
         Job = 0;
+    }
+    
+    template <class F>
+    void Run(yint count, F f)
+    {
+        Run(0, count, f);
     }
 };
