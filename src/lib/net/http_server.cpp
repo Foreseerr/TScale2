@@ -93,11 +93,14 @@ void THttpServer::Poll(TTcpPoller *pl)
         TIntrusivePtr<TConnection> conn = ConnArr[i];
         if (conn->IsValid() && !conn->IsComplete()) {
             ConnArr[dst++] = conn;
-            if (conn->SendBuffer.empty()) {
-                pl->AddSocket(conn->s, POLLRDNORM);
-            } else {
-                pl->AddSocket(conn->s, POLLRDNORM | POLLWRNORM);
+            yint events = 0;
+            if (!conn->SendBuffer.empty()) {
+                events |= POLLWRNORM;
             }
+            if (!conn->CloseWaitState) {
+                events |= POLLRDNORM;
+            }
+            pl->AddSocket(conn->s, events);
         }
     }
     ConnArr.resize(dst);
@@ -110,14 +113,14 @@ void THttpServer::OnPoll(TTcpPoller *pl, TVector<TRequest> *pReqArr)
     yint dst = 0;
     for (yint i = 0; i < YSize(ConnArr); ++i) {
         TIntrusivePtr<TConnection> conn = ConnArr[i];
-        yint events = pl->CheckSocket(conn->s);
-        if (events & ~(POLLRDNORM | POLLWRNORM)) {
+        yint revents = pl->CheckSocket(conn->s);
+        if (revents & ~(POLLRDNORM | POLLWRNORM)) {
             continue;
         }
-        if (events & POLLWRNORM) {
+        if (revents & POLLWRNORM) {
             conn->SendBufferedData();
         }
-        if (events & POLLRDNORM) {
+        if (revents & POLLRDNORM) {
             conn->RecvQueries(pReqArr);
         }
         ConnArr[dst++] = conn;
@@ -195,6 +198,7 @@ void THttpServer::TConnection::RecvQueries(TVector<THttpServer::TRequest> *pReqA
         }
     } else if (rv == 0) {
         //DebugPrintf("send recv result 0, connection closed? socket %g, we expect no more data from this connection\n", s * 1.);
+        CloseWaitState = true;
         Keepalive = false;
         LastReqId = RecvReqId;
     } else {

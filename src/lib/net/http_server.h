@@ -20,6 +20,7 @@ private:
     {
         SOCKET s = INVALID_SOCKET;
         bool Keepalive = false;
+        bool CloseWaitState = false;
         TVector<char> RecvBuffer;
         yint RecvOffset = 0;
         yint RecvReqId = 0;

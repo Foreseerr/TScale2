@@ -235,18 +235,21 @@ int main()
     TMersenne<ui32> rng(1313);
     TWordStats counts;
     // general purpose
-    const bool USE_CAPITAL_TOKEN = false;
-    //const bool USE_CAPITAL_TOKEN = true;
+    // const bool USE_CAPITAL_TOKEN = false;
+    const bool USE_CAPITAL_TOKEN = true;
     // LoadRandomDocsets(&counts, rng, "D:/text/cultura_y", 50, 7059);
     // LoadRandomDocsets(&counts, rng, "D:/text/librusec", 20, 440);
     // LoadRandomDocsets(&counts, rng, "D:/text/open_web_text", 40, 802);
     // LoadRandomDocsets(&counts, rng, "D:/text/cultura_y", 2, 7059);
     // LoadRandomDocsets(&counts, rng, "D:/text/librusec", 1, 440);
     // LoadRandomDocsets(&counts, rng, "D:/text/open_web_text", 2, 802);
-    LoadRandomDocsets(&counts, USE_CAPITAL_TOKEN, rng, "D:/text/golf/0", 1, 1);
+    //LoadRandomDocsets(&counts, USE_CAPITAL_TOKEN, rng, "D:/text/golf/0", 1, 1); // do not lookup test!
     LoadRandomDocsets(&counts, USE_CAPITAL_TOKEN, rng, "D:/text/golf/1", 1, 1);
     LoadRandomDocsets(&counts, USE_CAPITAL_TOKEN, rng, "D:/text/golf/2", 1, 1);
     LoadRandomDocsets(&counts, USE_CAPITAL_TOKEN, rng, "D:/text/golf/3", 1, 1);
+    LoadRandomDocsets(&counts, USE_CAPITAL_TOKEN, rng, "D:/text/golf/4", 1, 1);
+    LoadRandomDocsets(&counts, USE_CAPITAL_TOKEN, rng, "D:/text/golf/5", 1, 1);
+    LoadRandomDocsets(&counts, USE_CAPITAL_TOKEN, rng, "D:/text/golf/6", 1, 1);
     // // msmarco
     // const bool USE_CAPITAL_TOKEN = false;
     // LoadRandomDocsets(&counts, USE_CAPITAL_TOKEN, rng, "D:/msmarco/docset/", 2, 9);
